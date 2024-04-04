@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login & Register</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 300px;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        input {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin: 5px 0;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .error {
+            color: red;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        button {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-top: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+
+<body
+    style="background-image: url(../imgs/bg-login.jpg); background-repeat: no-repeat; background-position: center; background-size: 1900px;">
+    <div class="container">
+        <h2>Login</h2>
+        <form id="loginForm">
+            <div>
+                <input type="text" id="loginUsername" placeholder="Username">
+                <div id="loginUsernameError" class="error"></div>
+            </div>
+            <div>
+                <input type="password" id="loginPassword" placeholder="Password">
+                <div id="loginPasswordError" class="error"></div>
+            </div>
+            <button type="submit">Login</button>
+            <button type="button" id="showRegisterForm">Register</button>
+        </form>
+
+        <h2 class="hidden" id="registerTitle">Register</h2>
+        <form id="registerForm" class="hidden">
+            <div>
+                <input type="text" id="registerUsername" placeholder="Username">
+                <div id="registerUsernameError" class="error"></div>
+            </div>
+            <div>
+                <input type="email" id="registerEmail" placeholder="Email">
+                <div id="registerEmailError" class="error"></div>
+            </div>
+            <div>
+                <input type="password" id="registerPassword" placeholder="Password">
+                <div id="registerPasswordError" class="error"></div>
+            </div>
+            <div>
+                <input type="password" id="registerConfirmPassword" placeholder="Confirm Password">
+                <div id="registerConfirmPasswordError" class="error"></div>
+            </div>
+            <button type="submit">Register</button>
+            <button type="button" id="showLoginForm">Login</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById("loginForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+            var username = document.getElementById("loginUsername").value.trim();
+            var password = document.getElementById("loginPassword").value.trim();
+            var usernameError = document.getElementById("loginUsernameError");
+            var passwordError = document.getElementById("loginPasswordError");
+            usernameError.textContent = "";
+            passwordError.textContent = "";
+
+            if (username === "") {
+                usernameError.textContent = "Username is required";
+            }
+            if (password === "") {
+                passwordError.textContent = "Password is required";
+            }
+            // Additional validation logic can be added here
+        });
+
+        document.getElementById("registerForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+            var username = document.getElementById("registerUsername").value.trim();
+            var email = document.getElementById("registerEmail").value.trim();
+            var password = document.getElementById("registerPassword").value.trim();
+            var confirmPassword = document.getElementById("registerConfirmPassword").value.trim();
+            var usernameError = document.getElementById("registerUsernameError");
+            var emailError = document.getElementById("registerEmailError");
+            var passwordError = document.getElementById("registerPasswordError");
+            var confirmPasswordError = document.getElementById("registerConfirmPasswordError");
+            usernameError.textContent = "";
+            emailError.textContent = "";
+            passwordError.textContent = "";
+            confirmPasswordError.textContent = "";
+
+            if (username === "") {
+                usernameError.textContent = "Username is required";
+            }
+            if (email === "") {
+                emailError.textContent = "Email is required";
+            }
+            // Basic email validation
+            if (!isValidEmail(email)) {
+                emailError.textContent = "Invalid email format";
+            }
+            if (password === "") {
+                passwordError.textContent = "Password is required";
+            }
+            if (confirmPassword === "") {
+                confirmPasswordError.textContent = "Please confirm your password";
+            }
+            if (password !== confirmPassword) {
+                confirmPasswordError.textContent = "Passwords do not match";
+            }
+            // Additional validation logic can be added here
+        });
+
+        document.getElementById("showRegisterForm").addEventListener("click", function () {
+            document.getElementById("loginForm").classList.add("hidden");
+            document.getElementById("registerTitle").classList.remove("hidden");
+            document.getElementById("registerForm").classList.remove("hidden");
+        });
+
+        document.getElementById("showLoginForm").addEventListener("click", function () {
+            document.getElementById("loginForm").classList.remove("hidden");
+            document.getElementById("registerTitle").classList.add("hidden");
+            document.getElementById("registerForm").classList.add("hidden");
+        });
+
+        // Function to validate email format
+        function isValidEmail(email) {
+            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+    </script>
+</body>
+
+</html>
